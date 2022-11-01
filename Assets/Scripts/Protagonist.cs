@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class Protagonist : MonoBehaviour
 {
-    [SerializeField] private Transform groundCheckTransform;
+    [SerializeField] private Transform groundCheckTransform;   
     [SerializeField] private LayerMask playerMask;
+    
+    [SerializeField] string characterName;
+    [SerializeField] int levelUp;
+    private int characterLevel = 1;
+    
 
     private bool jumpKeyInput;
     private float horizontalInput;
@@ -16,6 +21,8 @@ public class Protagonist : MonoBehaviour
     void Start()
     {
         rigidbodyComponent = GetComponent<Rigidbody>();
+
+        CharacterInfo(characterName, characterLevel + levelUp);
     }
 
     // Update is called once per frame
@@ -36,7 +43,7 @@ public class Protagonist : MonoBehaviour
 
         if (Physics.OverlapSphere(groundCheckTransform.position, 0.5f, playerMask).Length == 0)
         {
-            return;
+            return; 
         }
 
         if (jumpKeyInput)
@@ -45,6 +52,19 @@ public class Protagonist : MonoBehaviour
             jumpKeyInput = false;
         }
 
+        if (groundCheckTransform.position.y < -2)
+        {
+            Debug.Log("YOU DIED");
+
+        }
     }
+
+    void CharacterInfo(string a, int b)
+    {
+        Debug.LogFormat("Player name is {0} and player level is {1}", a, b);
+      
+    }
+
+
 
 }
